@@ -3,199 +3,400 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TypedPaper</title>
-  <link href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css" rel="stylesheet" />
-  <style>
-    .menu-bar {
-      display: flex;
-      padding: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-evenly;
-      background-color: rgb(228, 230, 240);
-      /* border-left: #ccc 12px dashed; */
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TypedPaper</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css" rel="stylesheet" />
+    <style>
+        html,
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
 
-    .menu-item {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-    }
+        }
 
-    .menu-item label {
-      font-size: 12px;
-    }
+        .menu-bar {
+            display: flex;
+            padding: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(228, 230, 240);
+            /* border-left: #ccc 12px dashed; */
+        }
 
-    .paper-orientation {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      /* margin-bottom: 10px; */
-    }
+        .menu-item {
+            display: flex;
+            /* flex: 1; */
+            padding: 0px 16px;
+            flex-direction: column;
+        }
 
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 36px;
-      height: 24px;
-    }
+        .menu-item label {
+            font-size: 12px;
+        }
 
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+        .paper-orientation {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* margin-bottom: 10px; */
+        }
 
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: 0.4s;
-      border-radius: 34px;
-    }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 24px;
+        }
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 16px;
-      width: 16px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
-    }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-    input:checked+.slider {
-      background-color: #2196f3;
-    }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
 
-    input:checked+.slider:before {
-      transform: translateX(12px);
-    }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
 
-    #font {
-      width: 120px;
-    }
+        input:checked+.slider {
+            background-color: #2196f3;
+        }
 
-    .workspace {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: rgb(244, 246, 248);
-    }
+        input:checked+.slider:before {
+            transform: translateX(12px);
+        }
 
-    .paper {
-      width: 297mm;
-      height: 210mm;
-      box-sizing: border-box;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      box-shadow: 0px 10px 32px -8px rgba(20, 20, 36, 0.05);
-      background-color: white;
-      transform: scale(0.5);
-    }
+        #font {
+            width: 120px;
+        }
 
-    textarea {
-      text-align: center;
-      white-space: pre-wrap;
-      width: 100%;
-      height: 50%;
-      border: none;
-      outline: none;
-      resize: none;
-      padding: 20px 6px;
-      box-sizing: border-box;
-      /* font-size: 10px; */
-      /* 初始字体大小 */
-      font-family: Arial, sans-serif;
-      /* 默认字体 */
-      align-content: center;
-      overflow-y: hidden;
-      background-color: rgba(0, 0, 0, 0);
-    }
+        .workspace {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgb(86, 96, 107);
+            overflow: auto;
+            flex: 1;
+            justify-content: center;
+        }
 
-    /* 排版的模板 */
-    .typographical-default {
-      display: flex;
-      flex-direction: column;
-      width: inherit;
-      height: inherit;
-    }
+        #paper {
+            /* width: 297mm;
+            height: 210mm; */
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0px 10px 32px -8px rgba(20, 20, 36, 0.05);
+            background-color: white;
+            transform: scale(0.5);
+        }
 
-    .typographical-default #text-one {
-      flex: 1;
-    }
+        textarea {
+            text-align: center;
+            white-space: pre-wrap;
+            border: none;
+            outline: none;
+            resize: none;
+            padding: 6px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+            align-content: center;
+            overflow-y: hidden;
+            background-color: rgba(0, 0, 0, 0);
+        }
 
-    .typographical-default #text-two {
-      /* display: none; */
-      flex: 3;
-    }
-  </style>
+        /* 排版的模板 */
+        .typographical {
+            display: flex;
+            flex-direction: column;
+            width: inherit;
+            height: inherit;
+        }
+
+        .typographical #text-one {
+            flex: 1;
+        }
+
+        .typographical #text-two {
+            flex: 3;
+        }
+
+         
+        :root{
+            --page-size: A4;
+        }
+        @media print {
+            @page {
+                size: var(--page-size);
+                margin: 0mm;
+                
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                height: fit-content;
+            }
+
+            .menu-bar {
+                display: none;
+            }
+
+            .workspace {
+                overflow: hidden;
+                /* height: fit-content;
+                width: fit-content; */
+                /* display: block; */
+                /* flex-direction: column; */
+                /* align-items: center; */
+                background-color: rgb(85, 78, 63);
+                /* flex: 1; */
+                /* justify-content: center; */
+            }
+
+            #paper {
+                border: none;
+                background-color: rgb(196, 171, 171);
+
+                transform: none;
+                /* 打印时移除缩放 */
+                width: 100%;
+                height: 100%;
+
+            }
+
+            textarea {
+                text-align: center;
+                white-space: pre-wrap;
+                border: none;
+                outline: none;
+                resize: none;
+                padding: 6px;
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+                font-size: 10px;
+                align-content: center;
+                overflow-y: hidden;
+                background-color: rgba(0, 0, 0, 0);
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <div class="menu-bar">
-    <div class="menu-item paper-size">
-      <label for="size">纸张尺寸</label>
-      <select id="size">
-        <option value="a4" selected>A4</option>
-        <option value="b4">B4</option>
-        <option value="a3">A3</option>
-        <!-- 可以在这里添加更多纸张尺寸 -->
-      </select>
-    </div>
-    <div class="menu-item paper-orientation">
-      <label>纸张方向</label>
-      <div style="display: inline-flex; align-items: center">
-        纵向
-        <label class="switch" for="orientation">
-          <input type="checkbox" id="orientation" checked />
-          <span class="slider"></span>
-        </label>
-        横向
-      </div>
-    </div>
+    <div class="menu-bar">
+        <div class="menu-item paper-size">
+            <label for="size">纸张尺寸</label>
+            <select id="size">
+                <option value="a4" selected>A4</option>
+                <option value="b4">B4</option>
+                <option value="a3">A3</option>
+                <!-- 可以在这里添加更多纸张尺寸 -->
+            </select>
+        </div>
+        <div class="menu-item paper-orientation">
+            <label>纸张方向</label>
+            <div style="display: inline-flex; align-items: center">
+                纵向
+                <label class="switch" for="orientation">
+                    <input type="checkbox" id="orientation" checked />
+                    <span class="slider"></span>
+                </label>
+                横向
+            </div>
+        </div>
 
-    <div class="menu-item fonts">
-      <label for="font">字体</label>
-      <select id="font">
-        <option value="Arial" selected>Arial</option>
-        <option value="'OPlusSans3.0-Bold'">OPlusSans3.0-Bold</option>
-        <option value="TsangerBangHei-Regular">TsangerBangHei-Regular</option>
-        <option value="HarmonyOS_Sans_SC_Black">
-          HarmonyOS_Sans_SC_Black
-        </option>
-      </select>
-    </div>
+        <div class="menu-item fonts">
+            <label for="font">字体</label>
+            <select id="font">
+                <option value="Arial" selected>Arial</option>
+                <option value="'OPlusSans3.0-Bold'">OPlusSans3.0-Bold</option>
+                <option value="TsangerBangHei-Regular">TsangerBangHei-Regular</option>
+                <option value="HarmonyOS_Sans_SC_Black">
+                    HarmonyOS_Sans_SC_Black
+                </option>
+            </select>
+        </div>
 
-    <div class="menu-item text-color">
-      <label for="color">字体颜色</label>
-      <input type="color" id="color" value="#000000" />
+        <div class="menu-item text-color">
+            <label for="color">字体颜色</label>
+            <input type="color" id="color" value="#000000" />
+        </div>
+        <div class="menu-item plate-type">
+            <label>版式</label>
+            <div style="display: inline-flex; align-items: center">
+                <button type="button">默认</button>
+                <button type="button" value="">电话</button>
+                <button type="button">公告</button>
+            </div>
+        </div>
+        <button id="printButton" onclick="printPage()">打印</button>
     </div>
-    <div class="menu-item template">
+    <div class="workspace" id="workspace">
+        <div id="paper">
+            <section class="typographical">
+                <textarea class="text" id="text-one" oninput="fitTextToContainer()" placeholder="写到这里"></textarea>
+                <textarea class="text" id="text-two" oninput="fitTextToContainer()" placeholder="写到这里"></textarea>
+            </section>
+        </div>
+    </div>
+    <script>
+        const paperSizes = {
+            a4: {
+                portrait: { width: "210mm", height: "297mm" },
+                landscape: { width: "297mm", height: "210mm" },
+            },
+            b4: {
+                portrait: { width: "250mm", height: "353mm" },
+                landscape: { width: "353mm", height: "250mm" },
+            },
+            a3: {
+                portrait: { width: "297mm", height: "420mm" },
+                landscape: { width: "420mm", height: "297mm" },
+            },
+        };
+        function fitTextToContainer() {
+            const container = document.getElementById("paper");
+            const textElements = container.querySelectorAll(".text");
 
-      <label for="color">版式</label>
-      <div style="display: inline-flex; align-items: center">
-        <button type="button">默认</button><button type="button">电话</button><button type="button">公告</button>
-      </div>
+            textElements.forEach(textElement => {
+                let fontSize = 10; // 初始字体大小
+                textElement.style.fontSize = fontSize + "px";
 
-    </div>
-    <button id="printButton" onclick="printPage()">打印</button>
-  </div>
-  <div class="workspace">
-    <div class="paper">
-      <section class="typographical-default">
-        <textarea name="text" id="text-one">出租</textarea>
-        <textarea name="text" id="text-two">18301236421</textarea>
-      </section>
-    </div>
-  </div>
+                while (
+                    textElement.scrollHeight <= textElement.clientHeight &&
+                    textElement.scrollWidth <= textElement.clientWidth
+                ) {
+                    fontSize++;
+                    textElement.style.fontSize = fontSize + "px";
+                }
+
+                // 由于最后一次循环字体过大，需减小一次
+                textElement.style.fontSize = fontSize - 1 + "px";
+            });
+        }
+
+        function updatePageSize(size) {
+                document.documentElement.style.setProperty('--page-size', size);
+            }
+
+            
+
+        // function setPageSize(width, height) {
+        //     let styleSheet = document.styleSheets[0];
+        //     let rules = styleSheet.cssRules || styleSheet.rules;
+
+        //     for (let i = 0; i < rules.length; i++) {
+        //         if (rules[i].cssText.startsWith("@page")) {
+        //             styleSheet.deleteRule(i);
+        //             break;
+        //         }
+        //     }
+
+        //     styleSheet.insertRule(`@page { size: ${width} ${height}; }`, styleSheet.cssRules.length);
+        // }
+
+
+
+
+
+        // function setPageSize(width, height) {
+        //     let styleElement = document.createElement('style');
+        //     styleElement.innerHTML = `@page { size: ${width} ${height}; }`;
+        //     document.head.appendChild(styleElement);
+        //     // window.print();
+        // }
+        function updatePage() {
+            const size = document.getElementById("size").value;
+            const orientation = document.getElementById("orientation").checked
+                ? "landscape"
+                : "portrait";
+            const font = document.getElementById("font").value;
+            const color = document.getElementById("color").value;
+
+            const workspace = document.getElementById("workspace")
+            const page = document.getElementById("paper");
+
+            // const textElement = document.getElementById("text-one");
+            // const container = document.getElementById("paper");
+            const textElements = page.querySelectorAll(".text");
+
+            // 从配置对象中获取纸张尺寸
+            const selectedSize = paperSizes[size];
+            const dimensions = selectedSize[orientation];
+
+            textElements.forEach(textElement => {
+
+                textElement.style.fontFamily = font;
+                textElement.style.color = color;
+            });
+
+
+            pagewidth = dimensions.width;
+            pageheight = dimensions.height;
+            pagesize = pagewidth+' '+pageheight;
+            // 设置工作区中纸张的宽度和高度
+            page.style.width = dimensions.width;
+            page.style.height = dimensions.height;
+            //设置打印的纸张宽度和高度
+            // setPageSize(dimensions.width, dimensions.height);
+
+            updatePageSize(pagesize);
+
+
+            const scale = Math.min(
+                // window 改为workspace的宽高
+                workspace.clientWidth / page.offsetWidth,
+                workspace.clientHeight / page.offsetHeight
+            );
+            page.style.transform = `scale(${scale - 0.05})`;
+            // page.style.transformOrigin = "top left";
+
+            fitTextToContainer();
+        }
+
+        function printPage() {
+            const page = document.getElementById("paper");
+            page.style.transform = `scale(1)`;
+            window.print();
+        }
+
+        document.getElementById("size").addEventListener("change", updatePage);
+        document
+            .getElementById("orientation")
+            .addEventListener("change", updatePage);
+        document.getElementById("font").addEventListener("change", updatePage);
+        document.getElementById("color").addEventListener("input", updatePage);
+
+        window.addEventListener("resize", fitTextToContainer);
+        window.addEventListener("resize", updatePage);
+        document.addEventListener("DOMContentLoaded", updatePage);
+
+    </script>
 </body>
 
 </html>
