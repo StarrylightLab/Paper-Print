@@ -1,241 +1,285 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A4 Paper Text Fitting</title>
-    <style>
-        body, html {
-            height: 100%;
-            font-family: Arial, sans-serif;
-        }
-        .controls {
-            /* position: fixed; */
-            display:flex;
-            align-items: center;
-            justify-content: space-evenly;
-            top: 10px;
-            left: 10px;
-            z-index: 1000;
-            background: #ebe8e7;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .label {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            /* margin-bottom: 10px; */
-        }
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 36px;
-            height: 24px;
-        }
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: #2196F3;
-        }
-        input:checked + .slider:before {
-            transform: translateX(12px);
-        }
-        .bodypage{
-            background-color: rgb(238, 223, 223);
-            display: flex;
-        }
-        #paper {
-             
-            /* display: flex; */
-            /* align-items: center; */
-            /* justify-content: center; */
-            /* overflow: hidden;  */
-            /* margin: auto; */
-            box-sizing: border-box;
-            font-size: 10px; /* 初始字体大小 */
-            border: 1px solid black;
-            transform:scale(0.5);
-            /* transform-origin:  center center; */
-        }
-        #text {
-            text-align: center;
-            white-space: pre-wrap;
-            width: 100%;
-            height: 100%;
-            border: none;
-            outline: none;
-            resize: none;
-            padding: 20px 6px;
-            box-sizing: border-box;
-            font-size: 10px; /* 初始字体大小 */
-            font-family: Arial, sans-serif; /* 默认字体 */
-            align-content: center;
-            overflow-y: hidden;
-            background-color: rgba(0, 0, 0, 0);
-        }
-        #printButton {
-            /* position: absolute; */
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-        }
-        @media print {
-            @page {
-            }
-            body {
-                margin: 0;
-                padding: 0;
-                box-shadow: none;
-            }
-            .controls {
-                display: none;
-            }
-            #paper {
-                border: none; 
-                background-color: rgb(196, 171, 171);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A4 Paper Text Fitting</title>
+  <style>
+    body,
+    html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
 
-                transform: none; /* 打印时移除缩放 */
-                width: 100%;
-                height: 100%;
-            }
-        }
-    </style>
+    .controls {
+      /* position: fixed; */
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #ebe8e7;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      /* margin-bottom: 10px; */
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 36px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #2196f3;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(12px);
+    }
+
+    .bodypage {
+      background-color: rgb(238, 223, 223);
+      display: flex;
+    }
+
+    #paper {
+      /* display: flex; */
+      /* align-items: center; */
+      /* justify-content: center; */
+      /* overflow: hidden;  */
+      margin: auto;
+      box-sizing: border-box;
+      font-size: 10px;
+      /* 初始字体大小 */
+      border: 1px solid black;
+      transform: scale(0.5);
+      /* transform-origin:  center center; */
+    }
+
+    .text {
+      text-align: center;
+      white-space: pre-wrap;
+      width: 100%;
+      height: 50%;
+      border: none;
+      outline: none;
+      resize: none;
+      padding: 20px 6px;
+      box-sizing: border-box;
+      font-size: 10px;
+      /* 初始字体大小 */
+      font-family: Arial, sans-serif;
+      /* 默认字体 */
+      align-content: center;
+      overflow-y: hidden;
+      background-color: rgba(0, 0, 0, 0);
+    }
+
+    #printButton {
+      /* position: absolute; */
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    @media print {
+      @page {}
+
+      body {
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+
+      .controls {
+        display: none;
+      }
+
+      #paper {
+        border: none;
+        background-color: rgb(196, 171, 171);
+
+        transform: none;
+        /* 打印时移除缩放 */
+        width: 100%;
+        height: 100%;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="controls">
-        <label for="size">纸张尺寸:</label>
-        <select id="size">
-            <option value="a4" selected>A4</option>
-            <option value="b4">B4</option>
-            <option value="a3">A3</option>
-            <!-- 可以在这里添加更多纸张尺寸 -->
-        </select>
+  <div class="controls">
+    <label for="size">纸张尺寸:</label>
+    <select id="size">
+      <option value="a4" selected>A4</option>
+      <option value="b4">B4</option>
+      <option value="a3">A3</option>
+      <!-- 可以在这里添加更多纸张尺寸 -->
+    </select>
 
-        <label class="label">
-            纵向
-            <label class="switch">
-                <input type="checkbox" id="orientation" checked>
-                <span class="slider"></span>
-            </label>
-            横向
-        </label>
+    <label class="label">
+      纵向
+      <label class="switch">
+        <input type="checkbox" id="orientation" checked />
+        <span class="slider"></span>
+      </label>
+      横向
+    </label>
 
-        <label for="font">字体:</label>
-        <select id="font">
-            <option value="Arial" selected>Arial</option>
-            <option value="'OPlusSans3.0-Bold'">OPlusSans3.0-Bold</option>
-            <option value="TsangerBangHei-Regular">TsangerBangHei-Regular</option>
-            <option value="HarmonyOS_Sans_SC_Black">HarmonyOS_Sans_SC_Black</option>
-        </select>
+    <label for="font">字体:</label>
+    <select id="font">
+      <option value="Arial" selected>Arial</option>
+      <option value="'OPlusSans3.0-Bold'">OPlusSans3.0-Bold</option>
+      <option value="TsangerBangHei-Regular">TsangerBangHei-Regular</option>
+      <option value="HarmonyOS_Sans_SC_Black">HarmonyOS_Sans_SC_Black</option>
+    </select>
 
-        <label for="color">字体颜色:</label>
-        <input type="color" id="color" value="#000000">
+    <label for="color">字体颜色:</label>
+    <input type="color" id="color" value="#000000" />
 
-        <button id="printButton" onclick="printPage()">打印</button>
+    <button id="printButton" onclick="printPage()">打印</button>
+  </div>
+  <div class="bodypage">
+    <div id="paper">
+      <textarea id="text" class="text" oninput="fitTextToContainer()" placeholder="写到这里"></textarea>
+      <textarea id="text" class="text" oninput="fitTextToContainer()" placeholder="写到这里"></textarea>
     </div>
-<div class="bodypage">
-<div id="paper">
-        <textarea id="text" oninput="fitTextToContainer()" placeholder="写到这里">娃娃菜  5元拼凉菜10元</textarea>
-    </div>
-</div>
-    
+  </div>
 
-    <script>
-        const paperSizes = {
-            a4: { portrait: { width: '210mm', height: '297mm' }, landscape: { width: '297mm', height: '210mm' } },
-            b4: { portrait: { width: '250mm', height: '353mm' }, landscape: { width: '353mm', height: '250mm' } },
-            a3: { portrait: { width: '297mm', height: '420mm' }, landscape: { width: '420mm', height: '297mm' } }
-        };
+  <script>
+    const paperSizes = {
+      a4: {
+        portrait: { width: "210mm", height: "297mm" },
+        landscape: { width: "297mm", height: "210mm" },
+      },
+      b4: {
+        portrait: { width: "250mm", height: "353mm" },
+        landscape: { width: "353mm", height: "250mm" },
+      },
+      a3: {
+        portrait: { width: "297mm", height: "420mm" },
+        landscape: { width: "420mm", height: "297mm" },
+      },
+    };
 
-        function fitTextToContainer() {
-            const container = document.getElementById('paper');
-            const textElement = document.getElementById('text');
-            let fontSize = 10; // 初始字体大小
-            textElement.style.fontSize = fontSize + 'px';
+    function fitTextToContainer() {
+      const container = document.getElementById("paper");
+      const textElements = container.querySelectorAll(".text");
 
-            while (textElement.scrollHeight <= container.clientHeight && textElement.scrollWidth <= container.clientWidth) {
-                fontSize++;
-                textElement.style.fontSize = fontSize + 'px';
-            }
-            
-            // 由于最后一次循环字体过大，需减小一次
-            textElement.style.fontSize = (fontSize - 1) + 'px';
+      textElements.forEach(textElement => {
+        let fontSize = 10; // 初始字体大小
+        textElement.style.fontSize = fontSize + "px";
+
+        while (
+          textElement.scrollHeight <= textElement.clientHeight &&
+          textElement.scrollWidth <= textElement.clientWidth
+        ) {
+          fontSize++;
+          textElement.style.fontSize = fontSize + "px";
         }
 
-        function updatePage() {
-            const size = document.getElementById('size').value;
-            const orientation = document.getElementById('orientation').checked ? 'landscape' : 'portrait';
-            const font = document.getElementById('font').value;
-            const color = document.getElementById('color').value;
+        // 由于最后一次循环字体过大，需减小一次
+        textElement.style.fontSize = fontSize - 1 + "px";
+      });
+    }
 
-            const page = document.getElementById('paper');
-            const textElement = document.getElementById('text');
+    function updatePage() {
+      const size = document.getElementById("size").value;
+      const orientation = document.getElementById("orientation").checked
+        ? "landscape"
+        : "portrait";
+      const font = document.getElementById("font").value;
+      const color = document.getElementById("color").value;
 
-            // 从配置对象中获取纸张尺寸
-            const selectedSize = paperSizes[size];
-            const dimensions = selectedSize[orientation];
-            
-            page.style.fontFamily = font;
-            textElement.style.fontFamily = font;
-            page.style.color = color;
-            textElement.style.color = color;
+      const page = document.getElementById("paper");
+      const textElement = document.getElementById("text");
 
-            // 设置容器的宽度和高度
-            page.style.width = dimensions.width;
-            page.style.height = dimensions.height;
+      // 从配置对象中获取纸张尺寸
+      const selectedSize = paperSizes[size];
+      const dimensions = selectedSize[orientation];
 
-            const scale = Math.min(window.innerWidth / page.offsetWidth, window.innerHeight / page.offsetHeight);
-            page.style.transform = `scale(${scale-0.2})`;
-            page.style.transformOrigin = 'top left';
+      page.style.fontFamily = font;
+      textElement.style.fontFamily = font;
+      page.style.color = color;
+      textElement.style.color = color;
 
-            fitTextToContainer();
-        }
+      // 设置容器的宽度和高度
+      page.style.width = dimensions.width;
+      page.style.height = dimensions.height;
 
-        function printPage() {
-            window.print();
-        }
+      const scale = Math.min(
+        window.innerWidth / page.offsetWidth,
+        window.innerHeight / page.offsetHeight
+      );
+      page.style.transform = `scale(${scale - 0.2})`;
+      page.style.transformOrigin = "top left";
 
-        document.getElementById('size').addEventListener('change', updatePage);
-        document.getElementById('orientation').addEventListener('change', updatePage);
-        document.getElementById('font').addEventListener('change', updatePage);
-        document.getElementById('color').addEventListener('input', updatePage);
+      fitTextToContainer();
+    }
 
-        window.addEventListener('resize', fitTextToContainer);
-        window.addEventListener('resize', updatePage);
-        document.addEventListener('DOMContentLoaded', updatePage);
-    </script>
+    function printPage() {
+      window.print();
+    }
+
+    document.getElementById("size").addEventListener("change", updatePage);
+    document
+      .getElementById("orientation")
+      .addEventListener("change", updatePage);
+    document.getElementById("font").addEventListener("change", updatePage);
+    document.getElementById("color").addEventListener("input", updatePage);
+
+    window.addEventListener("resize", fitTextToContainer);
+    window.addEventListener("resize", updatePage);
+    document.addEventListener("DOMContentLoaded", updatePage);
+  </script>
 </body>
+
 </html>
