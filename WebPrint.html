@@ -15,6 +15,7 @@
       align-items: center;
       justify-content: space-evenly;
       background-color: rgb(228, 230, 240);
+      /* border-left: #ccc 12px dashed; */
     }
 
     .menu-item {
@@ -78,6 +79,63 @@
     input:checked+.slider:before {
       transform: translateX(12px);
     }
+
+    #font {
+      width: 120px;
+    }
+
+    .workspace {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgb(244, 246, 248);
+    }
+
+    .paper {
+      width: 297mm;
+      height: 210mm;
+      box-sizing: border-box;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0px 10px 32px -8px rgba(20, 20, 36, 0.05);
+      background-color: white;
+      transform: scale(0.5);
+    }
+
+    textarea {
+      text-align: center;
+      white-space: pre-wrap;
+      width: 100%;
+      height: 50%;
+      border: none;
+      outline: none;
+      resize: none;
+      padding: 20px 6px;
+      box-sizing: border-box;
+      /* font-size: 10px; */
+      /* 初始字体大小 */
+      font-family: Arial, sans-serif;
+      /* 默认字体 */
+      align-content: center;
+      overflow-y: hidden;
+      background-color: rgba(0, 0, 0, 0);
+    }
+
+    /* 排版的模板 */
+    .typographical-default {
+      display: flex;
+      flex-direction: column;
+      width: inherit;
+      height: inherit;
+    }
+
+    .typographical-default #text-one {
+      flex: 1;
+    }
+
+    .typographical-default #text-two {
+      /* display: none; */
+      flex: 3;
+    }
   </style>
 </head>
 
@@ -120,14 +178,22 @@
       <label for="color">字体颜色</label>
       <input type="color" id="color" value="#000000" />
     </div>
+    <div class="menu-item template">
+
+      <label for="color">版式</label>
+      <div style="display: inline-flex; align-items: center">
+        <button type="button">默认</button><button type="button">电话</button><button type="button">公告</button>
+      </div>
+
+    </div>
     <button id="printButton" onclick="printPage()">打印</button>
   </div>
   <div class="workspace">
     <div class="paper">
-      <section class="typographical-1">
-        <textarea name="content" id=""></textarea>
+      <section class="typographical-default">
+        <textarea name="text" id="text-one">出租</textarea>
+        <textarea name="text" id="text-two">18301236421</textarea>
       </section>
-
     </div>
   </div>
 </body>
