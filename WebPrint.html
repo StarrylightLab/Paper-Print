@@ -487,16 +487,36 @@
 
       window.print();
     }
+// 防抖函数
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func.apply(this, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
 
-    document.getElementById("size").addEventListener("change", updatePage);
-    document
-      .getElementById("orientation")
-      .addEventListener("change", updatePage);
-    document.getElementById("font").addEventListener("change", updatePage);
-    document.getElementById("color").addEventListener("input", updatePage);
+// 修改监听器，使用防抖包裹updatePage和fitTextToContainer
+document.getElementById("size").addEventListener("change", debounce(updatePage, 200));
+document.getElementById("orientation").addEventListener("change", debounce(updatePage, 200));
+document.getElementById("font").addEventListener("change", debounce(updatePage, 200));
+document.getElementById("color").addEventListener("input", debounce(updatePage, 200));
+window.addEventListener("resize", debounce(fitTextToContainer, 200));
+window.addEventListener("resize", debounce(updatePage, 200));
+    
+    // document.getElementById("size").addEventListener("change", updatePage);
+    // document
+    //   .getElementById("orientation")
+    //   .addEventListener("change", updatePage);
+    // document.getElementById("font").addEventListener("change", updatePage);
+    // document.getElementById("color").addEventListener("input", updatePage);
 
-    window.addEventListener("resize", fitTextToContainer);
-    window.addEventListener("resize", updatePage);
+    // window.addEventListener("resize", fitTextToContainer);
+    // window.addEventListener("resize", updatePage);
     document.addEventListener("DOMContentLoaded", updatePage);
 
 
