@@ -1,0 +1,143 @@
+/* 基础样式重置 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Microsoft YaHei', sans-serif;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.control-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.control-group label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+select, button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #3367d6;
+}
+
+/* 纸张样式 */
+#paper {
+  background: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.a4-portrait {
+  width: 210mm;
+  height: 297mm;
+}
+
+.a4-landscape {
+  width: 297mm;
+  height: 210mm;
+}
+
+.a3-portrait {
+  width: 297mm;
+  height: 420mm;
+}
+
+/* 文本容器 */
+.text-container {
+  width: 100%;
+  height: 100%;
+  padding: 20mm;
+  outline: none;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+/* 特殊内容样式 */
+.phone-block {
+  display: block;
+  margin-top: 10mm;
+  text-align: right;
+  font-weight: bold;
+}
+
+.title-block {
+  font-size: 1.5em;
+  margin-bottom: 10mm;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5mm;
+}
+
+/* 字符颜色控制 */
+.char-color {
+  position: relative;
+}
+
+.char-color:hover::after {
+  content: "🎨";
+  position: absolute;
+  right: -15px;
+  top: -5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* 打印时隐藏控制面板 */
+@media print {
+  .control-panel {
+    display: none;
+  }
+  
+  #paper {
+    box-shadow: none;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
