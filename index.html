@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能排版工具</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <div class="control-panel">
+      <div class="control-group">
+        <label for="paper-size">纸张尺寸</label>
+        <select id="paper-size">
+          <option value="a4-portrait">A4 纵向</option>
+          <option value="a4-landscape">A4 横向</option>
+          <option value="a3-portrait">A3 纵向</option>
+        </select>
+      </div>
+      
+      <div class="control-group">
+        <label for="font-family">字体</label>
+        <select id="font-family">
+          <option value="'Microsoft YaHei'">微软雅黑</option>
+          <option value="'SimSun'">宋体</option>
+          <option value="'KaiTi'">楷体</option>
+        </select>
+      </div>
+      
+      <div class="button-group">
+        <button id="print-btn">打印</button>
+        <button id="export-pdf-btn">导出PDF</button>
+      </div>
+    </div>
+    
+    <div id="paper" class="a4-portrait">
+      <div id="text-content" contenteditable="true" class="text-container">
+        在此输入您的文本内容...
+        <br>电话：13800138000
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
